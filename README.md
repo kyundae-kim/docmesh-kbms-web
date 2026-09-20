@@ -57,6 +57,19 @@ npm start
 
 운영 서버도 `dist/`를 Express가 정적으로 서빙합니다.
 
+Docker Compose 배포:
+
+```bash
+cp .env.example .env
+# .env에서 MINIO_ROOT_*와 KBMS_OLLAMA_ENDPOINT를 운영 값으로 변경
+docker compose up -d --build --wait
+docker compose ps
+```
+
+외부에는 기본적으로 web의 `WEB_PORT`(기본값 `8080`)만 공개됩니다. MinIO와
+KBMS의 데이터는 `minio-data`, `kbms-data` named volume에 보존됩니다.
+데이터까지 삭제할 때만 `docker compose down -v`를 사용합니다.
+
 ## 검증 명령
 
 ```bash
